@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% if periodo %}
+        {% if periodo.cerrado %}
+        <a href="/abrir/periodo/">Abrir periordo</a>
+        {% else %}
+        <a href="/cerrar/periodo/{{periodo.id}}/">Cerrar periodo {{periodo.numero}}</a>
+        {% endif %}
+    {% else %}
+        <a href="/abrir/periodo/">Abrir periodo</a>
+    {% endif %}
+{% endblock %}

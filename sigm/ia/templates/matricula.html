@@ -1,0 +1,13 @@
+{% extends 'base2.html' %}
+{% block body %}
+<form method="get">
+  <p>
+          <label for="identificacion">Identificación</label>
+          <input type="number" name="identificacion" id="identificacion" value="">
+  </p>
+  <button class="" type="submit">Matricularse</button>
+</form>
+<div>
+    <h2>{{mensaje}}</h2>
+</div>
+{% endblock %}

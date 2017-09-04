@@ -1,0 +1,25 @@
+
+{% extends 'base2.html' %}
+{% block body %}
+<script type="text/javascript">
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+    function showPosition(position) {
+        var lat = document.getElementById('id_latitud');
+        var lon = document.getElementById('id_longitud');
+        lat.value = position.coords.latitude;
+        lon.value = position.coords.longitude;
+    }
+    getLocation();
+</script>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_ul }}
+  <button class="" type="submit">Guardar</button>
+</form>
+{% endblock %}

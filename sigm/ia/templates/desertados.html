@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+  /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+  #map {
+    height: 70%;
+  }
+  /* Optional: Makes the sample page fill the window. */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+<div id="map"></div>
+<script type="text/javascript" src="/static/js/jquery-3.2.1.min.js">
+
+</script>
+<script>
+
+    //ajax
+    var lista = [];
+    $.ajax({
+        url: '/lista/estudiantes/',
+        type: 'GET',
+        dataType: 'json',
+    })
+    .done(function(response) {
+        lista = response;
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+
+     // This example creates a simple polygon representing the Bermuda Triangle.
+     // When the user clicks on the polygon an info window opens, showing
+     // information about the polygon's coordinates.
+
+
+     var map;
+     var infoWindow;
+
+     function initMap() {
+       map = new google.maps.Map(document.getElementById('map'), {
+         zoom: 13,
+         center: {lat: 10.4028204, lng: -75.5117016},
+         mapTypeId: 'terrain'
+       });
+     var center1 = {
+         lat:10.4268372,
+         lng:-75.5513065
+     }
+     var circle1 = new google.maps.Circle({
+            map: map,
+            clickable: true,
+            center: center1,
+            radius: 1000,
+            fillColor: 'red',
+            fillOpacity: .6,
+            strokeColor: '#313131',
+            strokeOpacity: .4,
+            strokeWeight: .8
+        });
+    var bounds = circle1.getBounds();
+
+        circle1.addListener('click', function() {
+            var latlng = null,
+                num = 0;
+            lista.forEach(function(element){
+                latlng = new google.maps.LatLng(element.latitud, element.longitud);
+                if(bounds.contains(latlng)){
+                    num++;
+                }
+            });
+
+            alert(num);
+        });
+     }
+   </script>
+   <script async defer
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB17a9QstSsXLr-1YQaFCYpe4Or8HKYNIk&callback=initMap">
+   </script>
+
+{% endblock %}
